@@ -1,101 +1,213 @@
-import Image from "next/image";
+"use client";
+import DocumentHeader from "@/components/HomeHeader";
+import { columns } from "@/components/table/columns";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+
+import { Plus } from "@geist-ui/icons";
+import {
+  ColumnFiltersState,
+  SortingState,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import DocumentTable from "@/components/table";
+import { useState } from "react";
+import { Sheet } from "@/components/ui/sheet";
+
+const data = [
+  {
+    doc_id: 100,
+    doc_name: "TESTPI",
+    Emitente: "AAAAAAAAA",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 2,
+    doc_name: "Nota Fiscal",
+    Emitente: "OPA ",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 3,
+    doc_name: "Nota Fiscal",
+    Emitente: "EAE",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 4,
+    doc_name: "Nota Fiscal",
+    Emitente: "ZZZZZ",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 454510,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 6,
+    doc_name: "ZEBRA",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 7,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 8,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 9,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 10,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 11,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 12,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2021",
+  },
+  {
+    doc_id: 13,
+    doc_name: "Nota Fiscal",
+    Emitente: "Empresa X",
+    valor_tributo_total: 100,
+    valor_liquido: 100,
+    data_criacao: "01/01/2021",
+    last_update: "01/01/2023",
+  },
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [nameFilter, setNameFilter] = useState<ColumnFiltersState>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const table = useReactTable({
+    columns: columns,
+    data: data,
+
+    getPaginationRowModel: getPaginationRowModel(),
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setNameFilter,
+    state: {
+      sorting,
+      columnFilters: nameFilter,
+    },
+  });
+
+  return (
+    <div className="mt-8 px-0 md:px-4">
+      <Sheet>
+        <DocumentHeader table={table} />
+      </Sheet>
+      <Separator className="mt-5" />
+      <div className="flex justify-between flex-row grid-cols-2 mt-5 items-center">
+        <div className="grid md:grid-cols-2 xs:grid-cols-1  md:w-1/2 xs:w-full gap-4">
+          <div className="xs:w-full md:w-auto">
+            <label className="font-semibold">Origem do documento</label>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Digitalizado" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="light">Light</SelectItem>
+                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value="system">System</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="xs:w-full md:w-auto">
+            <label className="font-semibold">Tipo do documento</label>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Buscar Documentos" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="light">Light</SelectItem>
+                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value="system">System</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="xs:hidden md:flex mt-6">
+          <Button variant="primary">
+            <Plus color="white" />
+            Adicionar Documento
+          </Button>
+        </div>
+      </div>
+      <DocumentTable table={table} />
     </div>
   );
 }
