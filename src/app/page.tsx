@@ -1,17 +1,10 @@
 "use client";
-import DocumentHeader from "@/components/HomeHeader";
+import AddDocument from "@/app/AddDocument";
 import { columns } from "@/components/table/columns";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 
-import { Plus } from "@geist-ui/icons";
+import Filter from "@/app/Filter";
+import DocumentTable from "@/components/table";
 import {
   ColumnFiltersState,
   SortingState,
@@ -21,9 +14,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import DocumentTable from "@/components/table";
 import { useState } from "react";
-import { Sheet } from "@/components/ui/sheet";
+import Search from "./Search";
+import Origin from "./Origin";
+import Type from "./Type";
 
 const data = [
   {
@@ -167,46 +161,27 @@ export default function Home() {
 
   return (
     <div className="mt-8 px-0 md:px-4">
-      <Sheet>
-        <DocumentHeader table={table} />
-      </Sheet>
-      <Separator className="mt-5" />
-      <div className="flex justify-between flex-row grid-cols-2 mt-5 items-center">
-        <div className="grid md:grid-cols-2 xs:grid-cols-1  md:w-1/2 xs:w-full gap-4">
-          <div className="xs:w-full md:w-auto">
-            <label className="font-semibold">Origem do documento</label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Digitalizado" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="xs:w-full md:w-auto">
-            <label className="font-semibold">Tipo do documento</label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Buscar Documentos" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+      <div className="flex justify-between flex-row flex-wrap xs:justify-center md:justify-between w-full gap-4">
+        <div>
+          <h2 className="text-2xl font-semibold ">Documentos</h2>
+          <h3 className="min-[320px]:text-sm min-[768px]:text-lg">
+            Crie, gerencie e visualize os documentos
+          </h3>
         </div>
-        <div className="xs:hidden md:flex mt-6">
-          <Button variant="primary">
-            <Plus color="white" />
-            Adicionar Documento
-          </Button>
+        <div className="items-center gap-4 flex xs:flex-col md:flex-row xs:w-full md:w-auto">
+          <Search table={table} />
+          <Filter table={table} />
         </div>
       </div>
+
+      <div className="flex justify-between flex-row grid-cols-2 mt-5 items-center">
+        <div className="grid md:grid-cols-2 xs:grid-cols-1  md:w-1/2 xs:w-full gap-4">
+          <Origin />
+          <Type />
+        </div>
+        <AddDocument table={table} />
+      </div>
+      <Separator className="mt-5" />
       <DocumentTable table={table} />
     </div>
   );

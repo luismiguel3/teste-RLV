@@ -1,15 +1,5 @@
-import {
-  SelectTrigger,
-  Select,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { CalendarIcon, Info } from "lucide-react";
-import { useForm, Controller } from "react-hook-form";
-import { Calendar } from "@/components/ui/calendar";
+import { Info, CalendarIcon } from "lucide-react";
+import { Button } from "../ui/button";
 import {
   SheetContent,
   SheetFooter,
@@ -17,17 +7,15 @@ import {
   SheetTitle,
   SheetDescription,
   SheetClose,
-  Sheet,
-} from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from "../ui/sheet";
+import { Controller, useForm } from "react-hook-form";
 import { format } from "date-fns";
+import { Calendar } from "../ui/calendar";
+import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Separator } from "../ui/separator";
 
-export default function Filters() {
+export default function SheetFilter() {
   const { control } = useForm();
 
   return (
@@ -51,12 +39,12 @@ export default function Filters() {
         </div>
       </SheetHeader>
 
-      <SheetFooter>
+      <SheetFooter className="w-full gap-8 flex flex-col">
         <Controller
           control={control}
           name="creationInterval"
           render={({ field: { value, onChange } }) => (
-            <div className="w-full">
+            <div className="flex flex-col">
               <label>Periodo de criação </label>
               <Popover>
                 <PopoverTrigger asChild>
@@ -96,15 +84,17 @@ export default function Filters() {
             </div>
           )}
         />
-      </SheetFooter>
-      <div className="flex justify-end mt-4 gap-4">
-        <Button variant="outline">Limpar</Button>
-        <SheetClose asChild>
+        <div className="flex justify-end gap-4">
+          <Button variant="outline">Limpar</Button>
           <Button type="submit" variant="primary">
             Aplicar Filtro
           </Button>
-        </SheetClose>
-      </div>
+
+          {/* <SheetClose asChild>
+                <Button type="submit">Save changes</Button>
+              </SheetClose> */}
+        </div>
+      </SheetFooter>
     </SheetContent>
   );
 }
