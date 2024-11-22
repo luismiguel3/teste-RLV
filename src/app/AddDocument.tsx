@@ -2,27 +2,23 @@ import { DocumentTableType } from "@/components/table/types";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@geist-ui/icons";
 import { Table } from "@tanstack/react-table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/ui/select";
-import Origin from "./Origin";
-import Type from "./Type";
 
-export default function DocumentHeader({
-  table,
-}: {
-  table: Table<DocumentTableType>;
-}) {
+import CreateModal from "@/components/modal";
+import {
+  Dialog,
+  DialogTrigger,
+} from "../components/ui/dialog";
+
+export default function DocumentHeader() {
   return (
-    <div className="xs:hidden md:flex mt-6">
-      <Button variant="primary">
-        <Plus color="white" />
-        Adicionar Documento
-      </Button>
-    </div>
+    <Dialog>
+      <DialogTrigger asChild className="xs:hidden md:flex mt-6">
+        <Button variant="primary">
+          <Plus color="white" />
+          Adicionar Documento
+        </Button>
+      </DialogTrigger>
+      <CreateModal />
+    </Dialog>
   );
 }

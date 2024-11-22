@@ -15,11 +15,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useLayoutEffect, useState } from "react";
-import Search from "./Search";
+import { useLayoutEffect, useState } from "react";
 import Origin from "./Origin";
+import Search from "./Search";
 import Type from "./Type";
-import { set } from "date-fns";
 
 const data = [
   {
@@ -196,7 +195,7 @@ export default function Home() {
         <AddDocument table={table} />
       </div>
       <Separator className="mt-5" />
-      <DocumentTable table={table} />
+      <DocumentTable />
     </div>
   );
 }
