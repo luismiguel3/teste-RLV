@@ -1,7 +1,5 @@
-import { DocumentTableType } from "@/components/table/types";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@geist-ui/icons";
-import { Table } from "@tanstack/react-table";
 
 import CreateModal from "@/components/modal";
 import {

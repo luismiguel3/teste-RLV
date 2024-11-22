@@ -7,8 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { flexRender, Table as TableType } from "@tanstack/react-table";
-import { DocumentTableType } from "@/components/table/types";
+import { flexRender } from "@tanstack/react-table";
 import { columns } from "@/components/table/columns";
 import { Button } from "@/components/ui/button";
 import useTable from "@/contexts/TableRef";

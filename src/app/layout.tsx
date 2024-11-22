@@ -2,11 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
   SidebarTrigger,
   SidebarProvider,
 } from "@/components/ui/sidebar";

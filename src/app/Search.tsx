@@ -1,7 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Search as SearchIcon } from "lucide-react";
-import { Table } from "@tanstack/react-table";
-import { DocumentTableType } from "@/components/table/types";
 import useTable  from "@/contexts/TableRef";
 
 

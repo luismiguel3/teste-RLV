@@ -155,7 +155,7 @@ export default function Home() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setNameFilter,
-    onStateChange(updater) {
+    onStateChange() {
       setTableRef(table);
     },
     state: {
@@ -192,7 +192,7 @@ export default function Home() {
           <Origin />
           <Type />
         </div>
-        <AddDocument table={table} />
+        <AddDocument  />
       </div>
       <Separator className="mt-5" />
       <DocumentTable />
