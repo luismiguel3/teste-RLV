@@ -10,7 +10,9 @@ export async function POST(req: NextRequest) {
   if (file instanceof File) {
     const fileName = file.name;
     const buffered = Buffer.from(await file.arrayBuffer());
-    writeFileSync(`./src/private/${fileName}`, buffered); // Salvando na pasta privada
+    writeFileSync(`public/${fileName}`, buffered); // Salvando na pasta publica
+
+
   } else {
     return NextResponse.json({ message: "Invalid file" });
   }
