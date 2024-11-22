@@ -23,12 +23,9 @@ export default function ImageUpload({ image }: { image: File }) {
     const formData = new FormData();
     formData.append("file", image);
     try {
-      const apiUrl =
-        process.env.NODE_ENV === "production"
-          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-          : "http://localhost:3000";
-
-      const { data } = await axios.post(`${apiUrl}/api/file`, formData, {
+      
+      const { data } = await axios.post(`api/file`, formData, {
+        
         headers: {
           "content-type": "multipart/form-data",
         },
