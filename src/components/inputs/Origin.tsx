@@ -15,7 +15,7 @@ export default function Origin() {
   return (
     <Controller
       control={control}
-      name="docType"
+      name="Origin"
       render={({ field: { value, onChange } }) => (
         <Select onValueChange={onChange} defaultValue={value}>
           <SelectGroup>
