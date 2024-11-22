@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { DocumentTableType } from "./types";
 
 type HeaderFilterProps = {
-  column: Column<DocumentTableType, any>;
+  column: Column<DocumentTableType, unknown>;
   title: string;
 };
 
