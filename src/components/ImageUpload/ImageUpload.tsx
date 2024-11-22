@@ -15,6 +15,10 @@ export default function ImageUpload({ image }: { image: File }) {
     }
   }, [image]);
 
+  console.log(process.env.NEXT_PUBLIC_API_URL)
+  console.log(process.env.NEXT_PUBLIC_APP_API_ENDPOINT)
+  console.log(process.env)
+
   async function uploadImage() {
     const formData = new FormData();
     formData.append("file", image);
@@ -46,8 +50,6 @@ export default function ImageUpload({ image }: { image: File }) {
           },
         }
       );
-
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
