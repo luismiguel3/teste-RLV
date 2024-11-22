@@ -2,6 +2,7 @@
 import AddDocument from "@/app/AddDocument";
 import { columns } from "@/components/table/columns";
 import { Separator } from "@/components/ui/separator";
+import useTable from "@/contexts/TableRef";
 
 import Filter from "@/app/Filter";
 import DocumentTable from "@/components/table";
@@ -14,10 +15,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Search from "./Search";
 import Origin from "./Origin";
 import Type from "./Type";
+import { set } from "date-fns";
 
 const data = [
   {
@@ -125,7 +127,7 @@ const data = [
     Emitente: "Empresa X",
     valor_tributo_total: 100,
     valor_liquido: 100,
-    data_criacao: "01/01/2021",
+    data_criacao: "01/11/2024",
     last_update: "01/01/2021",
   },
   {
@@ -142,6 +144,7 @@ const data = [
 export default function Home() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [nameFilter, setNameFilter] = useState<ColumnFiltersState>([]);
+  const { setTableRef, tableRef } = useTable();
 
   const table = useReactTable({
     columns: columns,
@@ -153,11 +156,22 @@ export default function Home() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setNameFilter,
+    onStateChange(updater) {
+      setTableRef(table);
+    },
     state: {
       sorting,
       columnFilters: nameFilter,
     },
   });
+
+  useLayoutEffect(() => {
+    setTableRef(table);
+  }, []);
+
+  if (!tableRef) {
+    return <></>;
+  }
 
   return (
     <div className="mt-8 px-0 md:px-4">
@@ -169,8 +183,8 @@ export default function Home() {
           </h3>
         </div>
         <div className="items-center gap-4 flex xs:flex-col md:flex-row xs:w-full md:w-auto">
-          <Search table={table} />
-          <Filter table={table} />
+          <Search />
+          <Filter />
         </div>
       </div>
 

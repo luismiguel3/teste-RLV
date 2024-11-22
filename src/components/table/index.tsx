@@ -11,12 +11,10 @@ import { flexRender, Table as TableType } from "@tanstack/react-table";
 import { DocumentTableType } from "@/components/table/types";
 import { columns } from "@/components/table/columns";
 import { Button } from "@/components/ui/button";
+import useTable from "@/contexts/TableRef";
 
-export default function DocumentTable({
-  table,
-}: {
-  table: TableType<DocumentTableType>;
-}) {
+export default function DocumentTable(){
+  const table = useTable((state) => state.tableRef);
   return (
     <>
       <UITable className="mt-6">

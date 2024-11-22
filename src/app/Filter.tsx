@@ -1,11 +1,14 @@
-import { addDays, format } from "date-fns";
-import { Filter, Search } from "lucide-react";
+import { Filter } from "lucide-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import SheetFilters from "../components/Filters";
+import SheetFilters from "../components/filter";
 import { Button } from "../components/ui/button";
-import { Sheet, SheetTrigger } from "../components/ui/sheet";
-import { Table } from "@tanstack/react-table";
-import { DocumentTableType } from "../components/table/types";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "../components/ui/sheet";
+import useTable from "../contexts/TableRef";
 
 type Inputs = {
   creationInterval: {
@@ -14,29 +17,57 @@ type Inputs = {
   };
   docType: string;
   issuer: string;
-  valueTaxes: number;
-  valueLiquid: number;
+  valueTaxes: string;
+  valueLiquid: string;
 };
 
-export default function SearchFilter({ table }:{ table: Table<DocumentTableType>;}) {
+export default function SearchFilter() {
+  const table = useTable((state) => state.tableRef);
+
   const methods = useForm<Inputs>({
     defaultValues: {
       creationInterval: {
-        from: new Date(),
-        to: addDays(new Date(), 7),
+        from: null,
+        to: null,
       },
       docType: "",
       issuer: "",
-      valueTaxes: 0,
-      valueLiquid: 0,
+      valueTaxes: "",
+      valueLiquid: "",
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) =>
-    console.log({
-      from: format(data.creationInterval.from, "dd/MM/yyyy"),
-      to: format(data.creationInterval.to, "dd/MM/yyyy"),
-    });
+  const { reset } = methods;
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const { creationInterval, docType, issuer, valueTaxes, valueLiquid } = data;
+
+    table.setColumnFilters([
+      {
+        id: "data_criacao",
+        value: {
+          from: format(creationInterval.from, "dd/MM/yyyy"),
+          to: format(creationInterval.to, "dd/MM/yyyy"),
+        },
+      },
+      {
+        id: "doc_name",
+        value: docType,
+      },
+      {
+        id: "Emitente",
+        value: issuer,
+      },
+      {
+        id: "valor_tributo_total",
+        value: valueTaxes,
+      },
+      {
+        id: "Valor liquido",
+        value: valueLiquid,
+      },
+    ]);
+  };
 
   return (
     <div>
@@ -49,13 +80,33 @@ export default function SearchFilter({ table }:{ table: Table<DocumentTableType>
             Filtrar
           </Button>
         </SheetTrigger>
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="w-full gap-8 flex flex-col">
-            <SheetFilters />
-          </form>
-        </FormProvider>
+        <SheetContent className="overflow-scroll">
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit, (errors) => {
+                console.log(errors);
+              })}
+              className="w-full gap-8 flex flex-col">
+              <SheetFilters />
+              <div className="flex justify-end mt-4 gap-4">
+                <Button
+                  variant="outline"
+                  type="reset"
+                  onClick={() => {
+                    reset();
+                    table.setColumnFilters([]);
+                  }}>
+                  Limpar
+                </Button>
+                <SheetClose asChild>
+                  <Button variant="primary" type="submit">
+                    Aplicar Filtro
+                  </Button>
+                </SheetClose>
+              </div>
+            </form>
+          </FormProvider>
+        </SheetContent>
       </Sheet>
     </div>
   );
