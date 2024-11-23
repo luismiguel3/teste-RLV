@@ -21,7 +21,7 @@ export default {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
+  				DEFAULT: '#22c55e',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {

@@ -1,17 +1,34 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DocumentTableType } from "../types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const Actions: ColumnDef<DocumentTableType> =  {
+import { Ellipsis } from "lucide-react";
+
+const Actions: ColumnDef<DocumentTableType> = {
   header: "",
   accessorKey: "actions",
   cell: () => {
     return (
-      <div className="flex-row flex items-center gap-4">
-        <button className="btn btn-primary">Editar</button>
-        <button className="btn btn-danger">Excluir</button>
-      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Ellipsis />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Visualizar</DropdownMenuItem>
+          <DropdownMenuItem>Exluir</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   },
-}
+};
 
 export default Actions;
