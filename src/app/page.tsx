@@ -33,7 +33,7 @@ const data = [
   {
     doc_id: 2,
     doc_name: "Nota Fiscal",
-    Emitente: "OPA ",
+    Emitente: "JOAO",
     valor_tributo_total: 100,
     valor_liquido: 100,
     data_criacao: "01/01/2021",
@@ -42,7 +42,7 @@ const data = [
   {
     doc_id: 3,
     doc_name: "Nota Fiscal",
-    Emitente: "EAE",
+    Emitente: "TESTE",
     valor_tributo_total: 100,
     valor_liquido: 100,
     data_criacao: "01/01/2021",
@@ -60,15 +60,6 @@ const data = [
   {
     doc_id: 454510,
     doc_name: "Nota Fiscal",
-    Emitente: "Empresa X",
-    valor_tributo_total: 100,
-    valor_liquido: 100,
-    data_criacao: "01/01/2021",
-    last_update: "01/01/2021",
-  },
-  {
-    doc_id: 6,
-    doc_name: "ZEBRA",
     Emitente: "Empresa X",
     valor_tributo_total: 100,
     valor_liquido: 100,

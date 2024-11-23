@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "@geist-ui/icons";
 
 import CreateModal from "@/components/modal/Create";
-import { Dialog, DialogTrigger } from "../components/ui/dialog";
-import Preview from "@/components/modal/Preview";
-import useModalPreview from "@/contexts/Modal";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "../components/ui/dialog";
 
 export default function DocumentHeader() {
   const methods = useForm();
@@ -15,25 +18,25 @@ export default function DocumentHeader() {
     console.log(data);
   };
 
-  const { fileUrl } = useModalPreview();
-
   return (
     <Dialog onOpenChange={(open) => !open && methods.reset()}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <FormProvider {...methods}>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit, (errors) => {
+            console.log(errors);
+          })}>
           <DialogTrigger asChild className="xs:hidden md:flex mt-6">
             <Button variant="primary">
               <Plus color="white" />
               Adicionar Documento
             </Button>
           </DialogTrigger>
-          {/* <CreateModal />
-          <Preview /> */}
-          {fileUrl ? <Preview /> : <CreateModal />}
-
-
-        </FormProvider>
-      </form>
+          <DialogContent className="max-h-screen overflow-y-scroll" >
+            <CreateModal />
+            <Button type="submit">Save changes</Button>
+          </DialogContent>
+        </form>
+      </FormProvider>
     </Dialog>
   );
 }

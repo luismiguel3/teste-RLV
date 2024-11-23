@@ -12,6 +12,8 @@ import {
 import Origin from "../inputs/Origin";
 import { useDropzone } from "react-dropzone";
 import ImageUpload from "../ImageUpload/ImageUpload";
+import ValueLiquid from "../inputs/valueLiquid";
+import ValueTaxes from "../inputs/ValueTaxes";
 
 export default function CreateModal() {
   const [image, setImage] = useState<File>(null);
@@ -24,7 +26,7 @@ export default function CreateModal() {
   });
 
   return (
-    <DialogContent className="xs:max-w-full md:max-w-2xl lg:max-w-[700px] overflow-y-scroll max-h-screen">
+    <div className="xs:max-w-full md:max-w-2xl lg:max-w-[700px] ">
       <DialogHeader>
         <DialogTitle className="text-lg">Criar novo documento</DialogTitle>
         <DialogDescription>
@@ -34,6 +36,8 @@ export default function CreateModal() {
       <div className="grid gap-4 mt-4">
         <Origin />
         <DocType />
+        {/* <ValueLiquid />
+        <ValueTaxes /> */}
       </div>
       <div
         {...getRootProps({
@@ -55,9 +59,6 @@ export default function CreateModal() {
         )}
       </div>
       {image && <ImageUpload image={image} />}
-      <DialogFooter>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter>
-    </DialogContent>
+    </div>
   );
 }
